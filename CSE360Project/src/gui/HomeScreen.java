@@ -4,9 +4,15 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.FillLayout;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -19,6 +25,8 @@ public class HomeScreen {
 	public int min = 0;
 	public int max = 100;
 	File file;
+	ArrayList<Integer> data = new ArrayList<>();
+
 
 	/**
 	 * Launch the application.
@@ -48,6 +56,60 @@ public class HomeScreen {
 		}
 	}
 
+	public void displayData()
+	{
+		
+		System.out.println(data);
+		
+	}
+	
+	public void initializeData()
+	{
+		if(file.getName().endsWith(".txt"))
+		{
+			BufferedReader reader;
+			try {
+				reader = new BufferedReader(new FileReader(file.getAbsolutePath()));
+				String line = reader.readLine();
+				while(line != null) {
+					
+					data.add(Integer.parseInt(line));
+					line = reader.readLine();
+			
+				}
+				reader.close();
+			} catch (IOException e) {
+				System.out.print("Invalid file");
+			}
+		}
+		
+		else if(file.getName().endsWith(".csv"))
+		{
+			BufferedReader reader;
+			String[] dataStr = null;
+			
+			try {
+				reader = new BufferedReader(new FileReader(file.getAbsolutePath()));
+				String line = reader.readLine();
+				dataStr = line.replaceAll("\\s+","").split(",");	
+				line = reader.readLine();
+				reader.close();
+				for(int i = 0; i < dataStr.length; i++)
+				{
+					data.add(Integer.parseInt(dataStr[i]));
+				}
+				
+			} catch (IOException e) {
+				System.out.print("Invalid file");
+			}
+		}
+		
+		else {
+			System.out.print("Invalid file");
+		}
+	
+		Collections.sort(data);
+	}
 	/**
 	 * Create contents of the window.
 	 */
@@ -75,14 +137,18 @@ public class HomeScreen {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				final JFileChooser fc = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.txt", "txt", "*.csv", "csv");
+				fc.setFileFilter(filter);
 				FileChooser fcWindow = new FileChooser();
 				int returnVal = fc.showOpenDialog(fcWindow);
 				fcWindow.setVisible(true);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					file = fc.getSelectedFile();
+					shell.setText("Grades     Min: " + min + "     Max: " + max + "     " + file.getName());
 				}
+				
 				fcWindow.setVisible(false);
-				shell.setText("Grades     Min: " + min + "     Max: " + max + "     " + file.getName());
+				initializeData();
 			}
 		});
 		btnLoadFile.setText("Load file");
@@ -91,6 +157,13 @@ public class HomeScreen {
 		btnModifyData.setText("Modify data");
 		
 		Button btnDataAnalysis = new Button(shell, SWT.NONE);
+		btnDataAnalysis.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				DataAnalysisScreen dataAnalysis = new DataAnalysisScreen(data);
+				dataAnalysis.main(null);
+			}
+		});
 		btnDataAnalysis.setText("Data analysis");
 		
 		Button btnErrorLog = new Button(shell, SWT.NONE);

@@ -2,16 +2,10 @@ package gui;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import swing2swt.layout.BorderLayout;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Text;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
-import swing2swt.layout.BoxLayout;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
