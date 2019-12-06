@@ -1,23 +1,13 @@
 package gui;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.layout.FillLayout;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.*;
+import org.eclipse.swt.layout.*;
+import org.eclipse.swt.widgets.*;
+import java.io.*;
+import java.util.*;
+import javax.swing.*;
+import javax.swing.filechooser.*;
 
 public class HomeScreen {
 
@@ -141,14 +131,11 @@ public class HomeScreen {
 				fc.setFileFilter(filter);
 				FileChooser fcWindow = new FileChooser();
 				int returnVal = fc.showOpenDialog(fcWindow);
-				fcWindow.setVisible(true);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					file = fc.getSelectedFile();
 					shell.setText("Grades     Min: " + min + "     Max: " + max + "     " + file.getName());
-				}
-				
-				fcWindow.setVisible(false);
-				initializeData();
+					initializeData();
+				}	
 			}
 		});
 		btnLoadFile.setText("Load file");

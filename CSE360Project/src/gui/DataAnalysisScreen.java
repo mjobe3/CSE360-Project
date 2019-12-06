@@ -1,19 +1,17 @@
 package gui;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
-
-import java.util.ArrayList;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.layout.*;
+import org.eclipse.swt.widgets.*;
+import java.util.*;
+import org.eclipse.jface.layout.*;
 
 public class DataAnalysisScreen {
 
 	protected Shell shell;
 	static ArrayList<Integer> data;
+	private Composite composite;
+	private Table table;
 
 	/**
 	 * Launch the application.
@@ -55,30 +53,26 @@ public class DataAnalysisScreen {
 		shell = new Shell();
 		shell.setSize(1200, 600);
 		shell.setText("Data analysis");
+		shell.setLayout(new FormLayout());
 		
-		List list1 = new List(shell, SWT.BORDER);
-		list1.setBounds(1077, 0, 107, 561);
+		composite = new Composite(shell, SWT.NONE);
+		composite.setLayout(new TableColumnLayout());
+		FormData fd_composite = new FormData();
+		fd_composite.bottom = new FormAttachment(100, -95);
+		fd_composite.right = new FormAttachment(100, -39);
+		fd_composite.top = new FormAttachment(100, -514);
+		fd_composite.left = new FormAttachment(100, -651);
+		composite.setLayoutData(fd_composite);
 		
-		List list2 = new List(shell, SWT.BORDER);
-		list2.setBounds(971, 0, 107, 561);
+		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+		RowData[] rows = new RowData[data.size()];
+		for(int i = 0; i < data.size(); i++)
+		{
+			
+		}
 		
-		List list3 = new List(shell, SWT.BORDER);
-		list3.setBounds(864, 0, 107, 561);
-		
-		List list4 = new List(shell, SWT.BORDER);
-		list4.setBounds(756, 0, 107, 561);
-		
-		for(int i = 0; i < data.size()/4; i++)
-			list4.add(Integer.toString(data.get(i)));
-		
-		for(int i = data.size()/4; i < data.size()/2; i++)
-			list3.add(Integer.toString(data.get(i)));
-		
-		for(int i = data.size()/2; i < data.size()*3/4; i++)
-			list2.add(Integer.toString(data.get(i)));
-		
-		for(int i = data.size()*3/4; i < data.size(); i++)
-			list1.add(Integer.toString(data.get(i)));
 
 	}
 }

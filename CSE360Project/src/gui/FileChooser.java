@@ -21,7 +21,7 @@ public class FileChooser extends JFrame {
 				try {
 					FileChooser frame = new FileChooser();
 					//Create a file chooser
-					frame.setVisible(true);
+					frame.setVisible(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
