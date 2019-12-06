@@ -1,0 +1,18 @@
+	//deletes a value (will be modified to take user input)
+	public static boolean DeleteGradeValue(String value)
+	{
+		int i = 0;
+	        while (i < grades.size() - 1) //loops through entire list and returns false if value is not found
+	        { 
+	            String gradeValue = grades.get(i);
+	            if (gradeValue.equalsIgnoreCase(value))
+			{
+	                grades.remove(i); 
+			        return true;
+			}
+	            i++;
+	        } 
+	return false;
+
+	}
+}
