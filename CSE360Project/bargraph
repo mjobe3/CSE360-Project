@@ -1,0 +1,74 @@
+package stuff;//random package name
+import java.awt.*;
+import java.awt.List;
+
+import javax.swing.*;
+import java.util.*;
+public class barGraph extends JPanel //class name
+{
+private static int count,totalArrayCount,bottomBoundary = 0, topBoundary = bottomBoundary + 9, actualBarPosition = 10,barPosition = 19;
+private static String numberRange;
+private static ArrayList<Integer> l1 = new ArrayList<Integer>();
+Scanner scanner = new Scanner(System.in);
+   public static void main (String[] args)
+   {
+	   /*l1.add(1);
+	   l1.add(20);
+	   l1.add(19);
+	   l1.add(29);
+	   l1.add(30)
+	   test cases*/
+	   new barGraph();
+   }
+
+   public barGraph()
+   {
+	   JFrame frame = new JFrame ("Graph");
+	   frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+
+	   frame.getContentPane().add(this);
+      frame.setPreferredSize(new Dimension(500,500));
+      frame.pack();
+      frame.setVisible(true);
+   }
+
+   public void paintComponent (Graphics page)
+   {            
+      super.paintComponent (page);    
+      final int HEIGHT = 10; //width of bar
+      
+      //This just displays the number of people in that number group
+      int i = 0;
+      while(totalArrayCount < l1.size()) {
+      //calculates number range and the total number of individuals with grade scores in that range
+      for (int j = l1.size() - 1 ; j >= i;j--)
+      {
+    	  if(l1.get(j) >= bottomBoundary && l1.get(j) <= topBoundary)
+    	  {
+    		count++;
+    	  }
+    	  
+      }
+      numberRange = bottomBoundary + "%-" + topBoundary + "%"; //sets number range to be bottom and top boundary numbers
+      page.setColor (Color.black);
+      //writes out number range for each bar
+      page.drawString(numberRange,30,barPosition);
+      //This displays the number of individuals in that range group
+      page.drawString(Integer. toString(count), 90, barPosition);
+      //draws bar graphs for each range group
+      page.setColor (Color.red);
+      page.fillRect (100, actualBarPosition, (count*10), HEIGHT);//1-10
+      
+      //counting and paramter variables being modified for next range group
+      totalArrayCount = totalArrayCount + count;
+      count = 0;
+      barPosition = barPosition + 14; actualBarPosition = actualBarPosition + 14;
+      bottomBoundary= bottomBoundary + 10; topBoundary = topBoundary + 10;
+     
+
+      }
+      //title on graph itself (temp)
+      page.drawString("Grade Range and Total Calculated Per Each Range",50, actualBarPosition + 36);
+   }
+
+}
